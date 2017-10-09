@@ -20,6 +20,7 @@ In order to help our users to understand, optimize and debug their PaddlePaddle 
 - Side by side code and graph relationship (pointing to a certain op that can highlight the corresponding code)
 - Make the board a lightweight IDE that able to run the program with custom parameters and see dynamically changing in visual graphs
 - Simply drag and drop to draw the visual diagram and auto generate the code for non programmers, providing a UI to upload all the training data
+- Bring something like TensorFlow Playground concepts into board
 
 
 ### TensorBoard’s technical architecture
