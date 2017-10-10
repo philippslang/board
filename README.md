@@ -1,18 +1,18 @@
-# PaddleBoard (temp name)
+# PaddleBoard
 
 ## Purpose
 
-A training model in neural networks could be very complex and confusing, its like a black box to PaddlePaddle developers. PaddleBoard (temp name) could be the flashlight to see what is under the hood!
+A deep learning model is complex and can be difficult to understand or debug. It can feel like a black box to PaddlePaddle users. PaddleBoard is the flashlight to shine what is under the hood!
 
-In order to help our users to understand, optimize and debug their PaddlePaddle program, we want to build a tool that can give insight into the computational graph architecture and performance in a form of graph / diagrams.
+In order to help users to understand, optimize, and debug their PaddlePaddle program, we want to build a vidualization tool that can give insight into the computational graph architecture and data.
 
 
 ## Ideas / Proposals
 
 ### Key Features
 
-- A diagram that visualizes entire model’s behavior including operators, variables and layers
-- A graph that keep tracks of metrics over time 
+- A diagram that displays entire model including operators, variables and layers
+- A graph that keep tracks of metrics/data over time 
 
 
 ### Improvement from Tensorboard / Long term proposals 
