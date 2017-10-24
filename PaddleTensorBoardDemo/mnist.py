@@ -111,22 +111,6 @@ def main():
     print 'Best pass is %s, testing Avgcost is %s' % (best[0], best[1])
     print 'The classification accuracy is %.2f%%' % (100 - float(best[2]) * 100)
 
-    # def load_image(file):
-    #     im = Image.open(file).convert('L')
-    #     im = im.resize((28, 28), Image.ANTIALIAS)
-    #     im = np.array(im).astype(np.float32).flatten()
-    #     im = im / 255.0
-    #     return im
-    #
-    # test_data = []
-    # cur_dir = os.path.dirname(os.path.realpath(__file__))
-    # test_data.append((load_image(cur_dir + '/image/infer_3.png'), ))
-    #
-    # probs = paddle.infer(
-    #     output_layer=predict, parameters=parameters, input=test_data)
-    # lab = np.argsort(-probs)  # probs and lab are the results of one batch data
-    # print "Label of image/infer_3.png is: %d" % lab[0][0]
-
 
 if __name__ == '__main__':
     main()
