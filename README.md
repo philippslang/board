@@ -23,4 +23,9 @@ In order to help users to understand, optimize, and debug their PaddlePaddle pro
 - Bring something like TensorFlow Playground concepts into board
 
 
-### TensorBoard’s technical architecture
+## Project Info and Progress
+This wiki page contains all the info and keep track of progress 
+https://github.com/PaddlePaddle/board/wiki/Paddle-Board-Project-Info
+
+## Wiki and Technical Doc
+Please go to Wiki Tab!
