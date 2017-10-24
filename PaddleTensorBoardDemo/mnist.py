@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import paddle.v2 as paddle
+from paddleFileWriter import PaddleFileWriter
 
 def softmax_regression(img):
     predict = paddle.layer.fc(
@@ -75,11 +76,15 @@ def main():
 
     lists = []
 
+    fw = PaddleFileWriter()
+
     def event_handler(event):
         if isinstance(event, paddle.event.EndIteration):
             if event.batch_id % 10 == 0:
                 print "Pass %d, Batch %d, Cost %f, %s" % (
                     event.pass_id, event.batch_id, event.cost, event.metrics)
+                fw.write("cost", event.cost, event.batch_id)
+                fw.write("error", event.metrics['classification_error_evaluator'], event.batch_id)
         if isinstance(event, paddle.event.EndPass):
             # save parameters
             with open('params_pass_%d.tar' % event.pass_id, 'w') as f:
