@@ -15,7 +15,7 @@ In mnist.py, it is logging the cost and error evaluator every 10 batches.
 
 ## Generate event file
 
-After you run the script with PaddleFileWriter write function, a event file "events.out.tfevents.{timestamp}" will be generated in the same program directory. The event file will first write a event with Version and each event for each time we write a value. Each event will be written as a protocol buffer (interface defined in tensorboard.proto) with a particular format of CRC mask function for checksum.
+After you run the script(python mnist.py) with PaddleFileWriter write function, a event file "events.out.tfevents.{timestamp}" will be generated in the same program directory. The event file will first write a event with Version and each event for each time we write a value. Each event will be written as a protocol buffer (interface defined in tensorboard.proto) with a particular format of CRC mask function for checksum.
 
 
 ## Launch TensorBoard
