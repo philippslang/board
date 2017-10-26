@@ -1,14 +1,23 @@
 import tensorboard_pb2 as tb
+import os
 import time
 import struct
 from crc32c import crc32c
 
 class PaddleFileWriter:
 
-    def __init__(self):
+    def __init__(self, log_path = None):
+
         # tensorboard looks for tag "tfevents" in filename to load data
-        filename = "events.out.tfevents." + str(int(time.time()))
-        self.writer = open(filename, 'wb')
+        filename = 'events.out.tfevents.{}'.format(int(time.time()))
+        if log_path is None:
+            path = filename
+        else:
+            if not os.path.exists(log_path):
+                os.makedirs(log_path)
+            path = os.path.join(log_path, filename)
+
+        self.writer = open(path, 'wb')
         # every log file has to start with event of file version
         self.writeEvent(tb.Event(wall_time=time.time(), step=0, file_version='brain.Event:2'))
 
