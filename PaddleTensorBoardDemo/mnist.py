@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import paddle.v2 as paddle
+from PaddleFileWriter.paddleFileWriter import PaddleFileWriter
 
 def softmax_regression(img):
     predict = paddle.layer.fc(
@@ -73,38 +74,55 @@ def main():
     trainer = paddle.trainer.SGD(
         cost=cost, parameters=parameters, update_equation=optimizer)
 
-    lists = []
+    train_lists = []
+    test_lists = []
 
-    def event_handler(event):
+    train_fw = PaddleFileWriter('./train')
+    test_fw = PaddleFileWriter('./test')
+
+    def event_handler_train(event):
         if isinstance(event, paddle.event.EndIteration):
             if event.batch_id % 10 == 0:
-                print "Pass %d, Batch %d, Cost %f, %s" % (
+                print "Train Data: Pass %d, Batch %d, Cost %f, %s" % (
                     event.pass_id, event.batch_id, event.cost, event.metrics)
-        if isinstance(event, paddle.event.EndPass):
-            # save parameters
-            with open('params_pass_%d.tar' % event.pass_id, 'w') as f:
-                parameters.to_tar(f)
+                train_fw.write("cost", event.cost, event.batch_id)
+                train_fw.write("error", event.metrics['classification_error_evaluator'], event.batch_id)
+                train_lists.append((event.pass_id, event.cost,
+                              event.metrics['classification_error_evaluator']))
 
-            result = trainer.test(reader=paddle.batch(
-                paddle.dataset.mnist.test(), batch_size=128))
-            print "Test with Pass %d, Cost %f, %s\n" % (
-                event.pass_id, result.cost, result.metrics)
-            lists.append((event.pass_id, result.cost,
-                          result.metrics['classification_error_evaluator']))
+                best = sorted(train_lists, key=lambda list: float(list[1]))[0]
+                accuracy = 100 - float(best[2]) * 100
+                print 'The training classification accuracy is %.2f%%' % accuracy
+                train_fw.write("accuracy", accuracy, event.batch_id)
 
+    def event_handler_test(event):
+        if isinstance(event, paddle.event.EndIteration):
+            if event.batch_id % 10 == 0:
+                print "Test Data: Pass %d, Batch %d, Cost %f, %s" % (
+                    event.pass_id, event.batch_id, event.cost, event.metrics)
+                test_fw.write("cost", event.cost, event.batch_id)
+                test_fw.write("error", event.metrics['classification_error_evaluator'], event.batch_id)
+                test_lists.append((event.pass_id, event.cost,
+                                    event.metrics['classification_error_evaluator']))
+
+                best = sorted(test_lists, key=lambda list: float(list[1]))[0]
+                accuracy = 100 - float(best[2]) * 100
+                print 'The training classification accuracy is %.2f%%' % accuracy
+                test_fw.write("accuracy", accuracy, event.batch_id)
 
     trainer.train(
         reader=paddle.batch(
             paddle.reader.shuffle(paddle.dataset.mnist.train(), buf_size=8192),
             batch_size=128),
-        event_handler=event_handler,
-        num_passes=6)
+        event_handler=event_handler_train,
+        num_passes=1)
 
-
-    # find the best pass
-    best = sorted(lists, key=lambda list: float(list[1]))[0]
-    print 'Best pass is %s, testing Avgcost is %s' % (best[0], best[1])
-    print 'The classification accuracy is %.2f%%' % (100 - float(best[2]) * 100)
+    trainer.train(
+        reader=paddle.batch(
+            paddle.reader.shuffle(paddle.dataset.mnist.test(), buf_size=8192),
+            batch_size=128),
+        event_handler=event_handler_test,
+        num_passes=1)
 
     # def load_image(file):
     #     im = Image.open(file).convert('L')
