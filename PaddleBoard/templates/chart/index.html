@@ -10,6 +10,7 @@
 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
 
       <link rel="stylesheet" href="../../static/css/style.css">
+      <link rel="stylesheet" href="../../static/css/chart.css">
 
   
 </head>
@@ -40,7 +41,7 @@
 
 <div class="container-fluid">
     <div class="row row-offcanvas row-offcanvas-left">
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+        <div class="col-xs-6 col-sm-2 sidebar-offcanvas" id="sidebar" role="navigation">
             <div class="sidebar-nav">
                 <ul class="nav">
 
@@ -67,14 +68,16 @@
                 <p>Charts from PaddlePaddle training data</p>
             </div>
             <div class="row">
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Chart 1</h2>
-                    <p><a class="btn btn-default" href="#">Enlarge charts»</a></p>
+                <div class="col-6 col-sm-6 col-lg-6">
+                    <h2>Line Chart</h2>
+                    <svg id="lineChart" width="400" height="200"></svg>
+                    <p><a class="btn btn-default" href="#">Enlarge»</a></p>
                 </div>
                 <!--/span-->
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Chart 2</h2>
-                    <p><a class="btn btn-default" href="#">Enlarge charts»</a></p>
+                <div class="col-6 col-sm-6 col-lg-6">
+                    <h2>Bar Chart</h2>
+                    <svg id="barChart" width="400" height="200"></svg>
+                    <p><a class="btn btn-default" href="#">Enlarge»</a></p>
                 </div>
                 <!--/span-->
 
@@ -96,8 +99,15 @@
 </div>
 <!--/.container-->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
+  <script src='https://d3js.org/d3.v3.min.js'></script>
 
-    <script  src="../../static/js/index.js"></script>
+    <script  src="../../static/js/index.js?v=00001"></script>
+    <script  src="../../static/js/chart.js?v=00001"></script>
+
+    <script>
+        var json = '{{ chart_data|safe }}' //use single quote otherwise wont work because chart data has double quotes
+        InitChart(json);
+    </script>
 
 </body>
 </html>
