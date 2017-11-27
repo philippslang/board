@@ -1,4 +1,5 @@
 import os
+import datetime
 import numpy as np
 import paddle.v2 as paddle
 from PaddleFileWriter.paddleFileWriter import PaddleFileWriter
@@ -77,8 +78,9 @@ def main():
     train_lists = []
     test_lists = []
 
-    train_fw = PaddleFileWriter('./train')
-    test_fw = PaddleFileWriter('./test')
+    timestamp_dir = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+    train_fw = PaddleFileWriter('./logs/%s/train' % timestamp_dir)
+    test_fw = PaddleFileWriter('./logs/%s/test' % timestamp_dir)
 
     def event_handler_train(event):
         if isinstance(event, paddle.event.EndIteration):
