@@ -3,8 +3,7 @@
 This is a prototype to demonstrate the feasibility to use Tensorboard to display PaddlePaddle's training data metrics.
 
 The proposed architecture design doc is here:
-https://github.com/PaddlePaddle/board/wiki/Proposed-architecture-design-for-using-Tensorboard-in-PaddlePaddle
-
+https://github.com/PaddlePaddle/board/wiki/Architecture-design-for-using-TensorBoard-with-PaddlePaddle
 
 ## Use PaddleFileWriter in Paddle script
 
