@@ -23,6 +23,7 @@ def convert_program_to_tf_graph_def(program):
         op_node_name_to_nodes = collections.OrderedDict()
 
         for block in program.blocks:
+            # Process Program variables and create Tensorflow Nodes
             for var_name in block.vars:
                 var_def = block.var(var_name)
 
@@ -33,6 +34,7 @@ def convert_program_to_tf_graph_def(program):
                 output_to_op_name[node_def.name] = node_def.name
                 var_node_name_to_nodes[node_def.name] = node_def
 
+            # Process Program operations and create Tensorflow Nodes
             for op in block.ops:
                 attrs = {}
 
@@ -50,6 +52,7 @@ def convert_program_to_tf_graph_def(program):
 
                 inputs = []
 
+                # Get operation inputs and outputs in order to create a connected Graph
                 for input_name in op.input_names:
                     input_name = op.input(input_name)[0]
                     if input_name in output_to_op_name.keys():
@@ -61,19 +64,16 @@ def convert_program_to_tf_graph_def(program):
                     output_to_op_name[o_name] = node_name
 
                     if o_name in var_node_name_to_nodes.keys():
-                        # A variable has been assigned an output, remove from graph
-                        # var_node_name_to_nodes.pop(o_name, None)
                         var_node = var_node_name_to_nodes[o_name]
                         var_node.input.extend([node_name])
 
                 node_def = tf.NodeDef(attr=attrs, input=inputs)
                 node_def.name = node_name
 
-
                 node_def.op = op.type
                 op_node_name_to_nodes[node_def.name] = node_def
-                # graph_def.node.extend([node_def])
 
+        # Add Program variables and operations as Nodes in the Tensorflow graph
         graph_def.node.extend(var_node_name_to_nodes.values())
         graph_def.node.extend(op_node_name_to_nodes.values())
 
