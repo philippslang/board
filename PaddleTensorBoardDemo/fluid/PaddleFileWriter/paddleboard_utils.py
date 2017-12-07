@@ -60,12 +60,13 @@ def convert_program_to_tf_graph_def(program):
                         inputs.append(input_node_name)
 
                 for output_name in op.output_names:
-                    o_name = op.output(output_name)[0]
-                    output_to_op_name[o_name] = node_name
+                    if op.output(output_name):
+                        o_name = op.output(output_name)[0]
+                        output_to_op_name[o_name] = node_name
 
-                    if o_name in var_node_name_to_nodes.keys():
-                        var_node = var_node_name_to_nodes[o_name]
-                        var_node.input.extend([node_name])
+                        if o_name in var_node_name_to_nodes.keys():
+                            var_node = var_node_name_to_nodes[o_name]
+                            var_node.input.extend([node_name])
 
                 node_def = tf.NodeDef(attr=attrs, input=inputs)
                 node_def.name = node_name
