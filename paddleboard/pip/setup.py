@@ -102,7 +102,7 @@ setup(
     author='Baidu',
     description='A visualization tool for Deep learning',
     long_description='',
-    packages=['paddleboard'],
+    packages=find_packages(),
     # TODO[thuan]: Compile C++ dependencies
     #ext_modules=[CMakeExtension('manage.py/cc')],
     #cmdclass=dict(build_ext=CMakeBuild, test=CatchTestCommand),
