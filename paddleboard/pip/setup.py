@@ -15,6 +15,7 @@ REQUIRED_PACKAGES = [
     'Django==1.8.11',
     'gunicorn==19.7.1',
     'gevent==1.2.1',
+    'numpy==1.13.3'
 ]
 
 class CMakeExtension(Extension):
@@ -103,9 +104,8 @@ setup(
     description='A visualization tool for Deep learning',
     long_description='',
     packages=find_packages(),
-    # TODO[thuan]: Compile C++ dependencies
-    #ext_modules=[CMakeExtension('manage.py/cc')],
-    #cmdclass=dict(build_ext=CMakeBuild, test=CatchTestCommand),
+    ext_modules=[CMakeExtension('paddleboard', sourcedir='external/VisualDL')],
+    cmdclass=dict(build_ext=CMakeBuild, test=CatchTestCommand),
     zip_safe=False,
     install_requires=[REQUIRED_PACKAGES],
     include_package_data=True,

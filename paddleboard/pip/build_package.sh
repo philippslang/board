@@ -12,6 +12,7 @@ function main() {
 
   cp "${SCRIPT_DIR}/setup.py" "${TMPDIR}"
   cp "${SCRIPT_DIR}/MANIFEST.in" "${TMPDIR}"
+  cp -R "${SCRIPT_DIR}/../external" "${TMPDIR}/external"
   cp -R "${SCRIPT_DIR}/../python/paddleboard" "${TMPDIR}/paddleboard"
   cp "${SCRIPT_DIR}/../python/manage.py" "${TMPDIR}/paddleboard/server/manage.py"
 
