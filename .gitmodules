@@ -1,0 +1,3 @@
+[submodule "paddleboard/external/VisualDL"]
+	path = paddleboard/external/VisualDL
+	url = git@github.com:PaddlePaddle/VisualDL.git
