@@ -2,7 +2,7 @@
 
 ## Installation Instructions
 
-**Prerequisites:** [CMake](https://cmake.org/download/) (Required to build VisualDL)
+**Prerequisites:** [CMake](https://cmake.org/download/) (Required to build VisualDL) and [virtualenv](https://virtualenv.pypa.io/en/stable/installation/)
 
 1) Clone paddleboard repo and setup git submodules
 
